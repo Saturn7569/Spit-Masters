@@ -1,5 +1,8 @@
 import pygame, sys
 
+from src.utils import *
+from src.entity import *
+
 pygame.init()
 
 class GameWindow:
@@ -11,6 +14,12 @@ class GameWindow:
 
         self.clock = pygame.time.Clock()
         self.FPS = 60
+
+        self.textures = {
+            "player": load_sprite("player.png")
+        }
+
+        self.init()
     
     def end_tick(self):
         self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
@@ -40,6 +49,9 @@ class GameWindow:
 
             self.end_tick()
 
+    def init(self):
+        self.player = Entity(self, "player")
+
     def check_event(self, e:pygame.Event):
         pass
 
@@ -47,10 +59,13 @@ class GameWindow:
         pass
 
     def draw(self):
-        pass
+        self.player.render(self.display)
 
     def draw_UI(self):
         pass
+
+    def get_texture(self, name):
+        return self.textures[name]
 
 if __name__ == "__main__":
     game = GameWindow()
